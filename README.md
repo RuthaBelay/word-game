@@ -157,7 +157,7 @@ wordGame-SAS/
 Frontend
 plaintext
 Copy code
-wordGame-SAS/
+word-game-client/
 └── Client/
     ├── public/
     ├── src/
