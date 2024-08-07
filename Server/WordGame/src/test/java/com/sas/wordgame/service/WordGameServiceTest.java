@@ -2,6 +2,7 @@ package com.sas.wordgame.service;
 
 
 import com.sas.wordgame.model.GuessResult;
+
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
@@ -21,13 +22,14 @@ class WordGameServiceTest {
     void testExactMatch() {
         GuessResult result = wordGameService.makeGuess(wordGameService.getTargetWord());
         assertThat(result.getResult()).isEqualTo("GGGGG");
-        assertThat(result.getMessage()).isEqualTo("Congratulations! You've guessed the word.");
-        assertThat(result.getAttempts()).isEqualTo(1);
+        assertThat(result.getMessage()).isEqualTo("Congratulations! You've guessed the word. Starting a new game!");
+        assertThat(result.getAttempts()).isEqualTo(0);
     }
 
     @Test
     void testPartialMatch() {
         String targetWord = wordGameService.getTargetWord();
+        // Construct a guess with shuffled letters that should not form a perfect match
         String guess = targetWord.substring(1) + targetWord.charAt(0);
 
         GuessResult result = wordGameService.makeGuess(guess);
@@ -46,11 +48,12 @@ class WordGameServiceTest {
 
     @Test
     void testExceedMaxAttempts() {
-        for (int i = 0; i < 6; i++) {
+        for (int i = 0; i < 5; i++) {
             wordGameService.makeGuess("apple");
         }
+        // Sixth attempt
         GuessResult result = wordGameService.makeGuess("apple");
-        assertThat(result.getMessage()).isEqualTo("You have exhausted all attempts!");
+        assertThat(result.getMessage()).isEqualTo("You have reached the maximum number of attempts. You failed! Want to try the game again?");
+        assertThat(result.getResult()).isNotNull(); // The result should reflect the final attempt
     }
 }
-
