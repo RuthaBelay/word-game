@@ -1,0 +1,11 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: my-service2
+  description: A description of my awesome service
+  tags:
+    - service
+spec:
+  type: service
+  owner: team-x
+  lifecycle: production
